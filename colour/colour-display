@@ -1,4 +1,13 @@
-from colorama import init, Fore, Back, Style
+pipeline {
+  agent none
+  stages {
+    stage('Back-end') {
+      agent {
+        docker { image 'maven:3.8.1-adoptopenjdk-11' }
+      }
+      steps {
+        sh 'pip install colorama'
+sh 'from colorama import init, Fore, Back, Style
 
 # Initialize colorama
 init()
@@ -6,4 +15,16 @@ init()
 # Print colored text
 print(Fore.RED + 'Red text')
 print(Back.GREEN + 'Green background')
-print(Style.RESET_ALL + 'Back to normal')
+print(Style.RESET_ALL + 'Back to normal')'
+      }
+    }
+    stage('Front-end') {
+      agent {
+        docker { image 'node:16-alpine' }
+      }
+      steps {
+        sh 'node --version'
+      }
+    }
+  }
+}
