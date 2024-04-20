@@ -1,0 +1,9 @@
+from colorama import init, Fore, Back, Style
+
+# Initialize colorama
+init()
+
+# Print colored text
+print(Fore.RED + 'Red text')
+print(Back.GREEN + 'Green background')
+print(Style.RESET_ALL + 'Back to normal')
