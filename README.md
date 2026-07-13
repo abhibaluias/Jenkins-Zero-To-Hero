@@ -53,8 +53,11 @@ sudo apt-get install jenkins
 ```
 
 Error and resolution 
+
 ERROR on running sudo apt update--->The repository 'https://pkg.jenkins.io/debian binary/ Release' is not signed.
 N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+
+
 RESOLUTION 
 The error indicates that the Jenkins repository is configured incorrectly. Specifically, your system is trying to use:
 https://pkg.jenkins.io/debian binary/
