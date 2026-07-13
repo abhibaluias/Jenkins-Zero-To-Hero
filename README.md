@@ -52,6 +52,30 @@ sudo apt-get update
 sudo apt-get install jenkins
 ```
 
+Error and resolution 
+ERROR on running sudo apt update--->The repository 'https://pkg.jenkins.io/debian binary/ Release' is not signed.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+RESOLUTION 
+The error indicates that the Jenkins repository is configured incorrectly. Specifically, your system is trying to use:
+https://pkg.jenkins.io/debian binary/
+instead of the correct repository:
+https://pkg.jenkins.io/debian-stable binary/
+Step 1: Remove the incorrect repository
+sudo rm -f /etc/apt/sources.list.d/jenkins.list
+If you manually added it to /etc/apt/sources.list, remove the Jenkins entry from there as well:
+sudo nano /etc/apt/sources.list
+Step 2: Add the correct GPG key
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+Step 3: Add the correct repository
+echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/" | sudo tee /etc/apt/sources.list.d/jenkins.list
+Step 4: Update
+sudo apt update
+If it still fails, please run these commands and share the output:
+cat /etc/os-release
+cat /etc/apt/sources.list.d/jenkins.list
+sudo apt update
+That will help identify whether the repository URL or signing key is still incorrect.
+
 **Note: ** By default, Jenkins will not be accessible to the external world due to the inbound traffic restriction by AWS. Open port 8080 in the inbound traffic rules as show below.
 
 - EC2 > Instances > Click on <Instance-ID>
